@@ -1,0 +1,22 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://sp.example.com/sp" validUntil="2018-01-01T00:00:00Z">
+
+    <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+
+        <AssertionConsumerService Location="https://192.168.59.103:9443/" index="1"
+                                     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+        <!--
+        <AssertionConsumerService Location="https://localhost:9999/" index="2"
+                                     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"/>
+        <AssertionConsumerService Location="https://localhost:9999/" index="3"
+                                     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"/>
+        <AssertionConsumerService Location="https://localhost:9999/" index="4"
+                                     Binding="urn:oasis:names:tc:SAML:2.0:bindings:PAOS"/>
+        <AssertionConsumerService Location="https://localhost:9999/" index="5"
+                                     Binding="urn:oasis:names:tc:SAML:1.0:profiles:browser-post"/>
+        <AssertionConsumerService Location="https://localhost:9999/" index="6"
+                                     Binding="urn:oasis:names:tc:SAML:1.0:profiles:artifact-01"/>
+        -->
+
+    </SPSSODescriptor>
+
+</EntityDescriptor>

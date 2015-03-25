@@ -1,0 +1,26 @@
+dn: cn=config
+changetype: modify
+add: passwordChange
+passwordChange: on
+-
+add: passwordExp
+passwordExp: on
+-
+add: passwordMaxAge
+passwordMaxAge: 86400
+-
+add: passwordCheckSyntax
+passwordCheckSyntax: on
+-
+add: passwordMinCategories
+passwordMinCategories: 1
+-
+replace: passwordLockout
+passwordLockout: on
+-
+add: passwordMaxFailure
+passwordMaxFailure: 4
+-
+add: passwordLockoutDuration
+passwordLockoutDuration: 600
+-

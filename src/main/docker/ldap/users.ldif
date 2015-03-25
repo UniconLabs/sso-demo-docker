@@ -1,0 +1,99 @@
+dn: cn=admin,dc=example,dc=edu
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+userPassword: password
+description: LDAP administrator
+
+#Good account
+dn: uid=jsmith,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: passwordObject
+givenName: Joe
+uid: jsmith
+sn: Smith
+cn: John Smith
+mail: jsmith@example.edu
+userPassword: password
+passwordExpirationTime: 20250310152142Z
+
+#Good account
+dn: uid=jsmith1,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: passwordObject
+givenName: Joe
+uid: jsmith1
+sn: Smith1
+cn: John Smith1
+mail: jsmith1@example.edu
+userPassword: password
+passwordExpirationTime: 20250310152142Z
+
+#Good account
+dn: uid=jsmith2,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: passwordObject
+givenName: Joe
+uid: jsmith2
+sn: Smith2
+cn: John Smith
+mail: jsmith2@example.edu
+userPassword: password
+passwordExpirationTime: 20250310152142Z
+
+#[LDAP: error code 49 - password expired!]
+dn: uid=banderson,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+givenName: Bob
+uid: banderson
+sn: Anderson
+cn: Bob Anderson
+mail: banderson@example.edu
+userPassword: password
+passwordExpirationTime: 20150310152142Z
+
+#[LDAP: error code 53 - Account inactivated. Contact system administrator.]
+dn: uid=jgasper,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+givenName: John
+uid: jgasper
+sn: Gasper
+cn: John Gasper
+mail: jgasper@example.edu
+userPassword: password
+nsAccountLock: true
+passwordExpirationTime: 20250310152142Z
+
+#[LDAP: error code 19 - Exceed password retry limit. Please try later.]
+dn: uid=kmiller,ou=People,dc=example,dc=edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: passwordObject
+givenName: Karen
+uid: kmiller
+sn: Miller
+cn: Karen Miller
+mail: kmiller@example.edu
+userPassword: password
+accountUnlockTime: 20350312055431Z
+retryCountResetTime: 20150310162928Z
+passwordRetryCount: 5
+passwordExpWarned: 1
+passwordExpirationTime: 20250310152142Z

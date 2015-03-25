@@ -1,0 +1,83 @@
+plugins {
+  id "de.gesellix.docker" version "2015-03-07T20-17-57"
+}
+
+apply plugin: "base"
+apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
+
+
+repositories {
+    mavenCentral artifactUrls: ["http://developer.jasig.org/repo/content/groups/m2-legacy/", "http://central.maven.org/maven2/"]
+    maven { url "http://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencies {
+    runtime("org.jasig.cas:cas-server-webapp:3.5.3@war") {
+        transitive = true
+    }
+    runtime("org.jasig.cas:cas-server-support-ldap:3.5.3")
+    runtime("commons-pool:commons-pool:1.5.6")
+}
+
+docker {
+    dockerHost = 'https://192.168.59.103:2376'
+}
+
+import de.gesellix.gradle.docker.tasks.*
+task stopDockerContainer(type: DockerStopTask) {
+  containerId = "sso-demo"
+}
+
+task removeDockerContainer(type: DockerRmTask) {
+  dependsOn stopDockerContainer
+  
+  containerId = "sso-demo"
+}
+
+
+task copyDockerSrc(type: Copy) {
+    from 'src/main/docker/'
+    into 'build/docker/'
+}
+
+war {
+    baseName "cas"
+}
+
+task copyWarToDocker(type: Copy) {
+    dependsOn war
+
+    from 'build/libs/'
+    into 'build/docker/'
+    include 'cas.war'
+}
+
+task buildDockerImage(type: DockerBuildTask) {
+	dependsOn copyDockerSrc, copyWarToDocker, removeDockerContainer
+
+    imageName = "unicon/sso-demo"
+    buildContextDirectory = file('build/docker/')
+
+    doFirst { 
+        logger.lifecycle("Building the initial docker image may take a long time. Have plenty of bandwidth.")
+    } 
+}
+
+task runDockerContainer(type: DockerRunTask) {
+    dependsOn buildDockerImage
+  	
+    imageName = "unicon/sso-demo"
+  	containerName = "sso-demo"
+  	containerConfiguration = [
+      	"ExposedPorts": ["8443/tcp": [:]],
+      	"HostConfig"  : [
+           "Binds": [projectDir.toString() + "/build/libs:/jar-location"],
+           "PortBindings": [
+         		   "389/tcp": [["HostPort": "10389"]],
+               "5005/tcp": [["HostPort": "5005"]],
+         		   "8443/tcp": [["HostPort": "9443"]]
+     		   ]
+        ]
+  	]
+}
+
